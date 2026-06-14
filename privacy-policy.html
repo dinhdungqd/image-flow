@@ -5,481 +5,913 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy – Image Flow</title>
   <style>
+    :root {
+      --bg:        #0b0f1a;
+      --surface:   #111827;
+      --surface2:  #1a2235;
+      --border:    #1f2d45;
+      --accent:    #6366f1;
+      --accent2:   #8b5cf6;
+      --text:      #e2e8f0;
+      --muted:     #7c8fa6;
+      --subtle:    #94a3b8;
+      --green:     #22c55e;
+      --red:       #ef4444;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      line-height: 1.7;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #6d28d9 100%);
-      padding: 64px 24px 48px;
-      text-align: center;
-    }
-    .hero .badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-    .hero p {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       font-size: 15px;
-      color: rgba(255,255,255,0.75);
-      max-width: 520px;
-      margin: 0 auto 20px;
-    }
-    .hero .meta {
-      font-size: 12px;
-      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+      min-height: 100vh;
     }
 
-    /* ── Layout ── */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
-    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    /* ── Summary cards ── */
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 48px;
-    }
-    .summary-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 20px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .summary-card .icon {
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    .summary-card h3 {
-      font-size: 13px;
-      font-weight: 700;
-      color: #f1f5f9;
-      margin-bottom: 4px;
-    }
-    .summary-card p {
-      font-size: 12px;
-      color: #94a3b8;
-    }
-
-    /* ── Section ── */
-    .section {
-      margin-bottom: 40px;
-    }
-    .section-header {
+    /* ═══════════════════════════════════════
+       TOP NAV
+    ═══════════════════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 15, 26, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #1e293b;
+      justify-content: space-between;
+      height: 58px;
     }
-    .section-number {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: #fff;
-      font-size: 12px;
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
       font-weight: 700;
-      width: 28px;
-      height: 28px;
+      color: var(--text);
+    }
+    .nav-brand .logo {
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-brand .logo svg { width: 17px; height: 17px; }
+    .nav-pill {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(99,102,241,0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99,102,241,0.3);
+      padding: 3px 12px;
+      border-radius: 999px;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 96px 24px 80px;
+      text-align: center;
+    }
+    /* mesh gradient blobs */
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
       border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #6366f1, transparent 70%);
+      top: -120px; left: 50%;
+      transform: translateX(-60%);
+    }
+    .hero::after {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #8b5cf6, transparent 70%);
+      bottom: -80px; right: 10%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      padding: 4px 14px 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow span { font-size: 14px; }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 30%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 999px;
+    }
+    .hero-meta .dot {
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    /* ═══════════════════════════════════════
+       QUICK FACTS STRIP
+    ═══════════════════════════════════════ */
+    .facts-strip {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 0 24px 64px;
+    }
+    .fact-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--subtle);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: border-color 0.2s;
+    }
+    .fact-chip:hover { border-color: rgba(99,102,241,0.5); }
+    .fact-chip .chip-icon { font-size: 16px; }
+
+    /* ═══════════════════════════════════════
+       MAIN LAYOUT
+    ═══════════════════════════════════════ */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 96px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ── Sidebar TOC ── */
+    .toc {
+      position: sticky;
+      top: 74px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .toc-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: all 0.15s;
+      line-height: 1.3;
+    }
+    .toc a:hover {
+      color: var(--text);
+      background: var(--surface2);
+      text-decoration: none;
+    }
+    .toc a .num {
+      font-size: 10px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      background: var(--surface2);
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-    }
-    .section h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
-    .section p {
-      font-size: 14px;
-      color: #94a3b8;
-      margin-bottom: 12px;
-    }
-    .section ul {
-      list-style: none;
-      padding: 0;
-    }
-    .section ul li {
-      font-size: 14px;
-      color: #94a3b8;
-      padding: 6px 0 6px 22px;
-      position: relative;
-    }
-    .section ul li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: #6366f1;
-      font-size: 12px;
+      color: var(--accent);
     }
 
-    /* ── Permission table ── */
-    .perm-table {
+    /* ── Content ── */
+    .content { min-width: 0; }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+      margin-bottom: 10px;
+    }
+    .section-label .snum {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .section p {
+      color: var(--subtle);
+      margin-bottom: 14px;
+    }
+
+    /* ── List ── */
+    .item-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .item-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--subtle);
+      line-height: 1.55;
+    }
+    .item-list li .bullet {
+      width: 20px;
+      height: 20px;
+      background: rgba(99,102,241,0.15);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 11px;
+    }
+    .item-list li strong { color: var(--text); }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin: 4px 0 14px;
+    }
+    table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 8px;
+      font-size: 13.5px;
     }
-    .perm-table th {
-      background: #1e293b;
-      color: #cbd5e1;
-      font-weight: 600;
-      padding: 10px 14px;
+    thead tr {
+      background: var(--surface2);
+    }
+    th {
       text-align: left;
-      border-bottom: 1px solid #334155;
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
     }
-    .perm-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid #1e293b;
-      color: #94a3b8;
+    td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--subtle);
       vertical-align: top;
     }
-    .perm-table tr:last-child td { border-bottom: none; }
-    .perm-table tr:hover td { background: #1e293b; }
-    .perm-name {
-      font-family: "Courier New", monospace;
-      color: #a5b4fc;
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+    .code-tag {
+      font-family: "SF Mono", "Fira Code", Consolas, monospace;
       font-size: 12px;
+      color: #a5b4fc;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      padding: 2px 7px;
+      border-radius: 5px;
       white-space: nowrap;
     }
 
-    /* ── Highlight box ── */
-    .highlight {
-      background: #1e293b;
-      border-left: 3px solid #6366f1;
-      border-radius: 0 8px 8px 0;
-      padding: 16px 20px;
+    /* ── Callout ── */
+    .callout {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 18px;
       margin: 16px 0;
     }
-    .highlight p {
-      margin: 0;
-      font-size: 14px;
-      color: #cbd5e1;
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .callout p { margin: 0; font-size: 13.5px; color: var(--subtle); }
+    .callout p strong { color: var(--text); }
+
+    /* ── Data flow visual ── */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .flow-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 16px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .flow-card:hover { border-color: rgba(99,102,241,0.4); }
+    .flow-card .fc-icon { font-size: 28px; margin-bottom: 10px; }
+    .flow-card .fc-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+    .flow-card .fc-desc {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .badge-yes {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(34,197,94,0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34,197,94,0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 8px;
+    }
+    .badge-no {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(239,68,68,0.12);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.25);
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 8px;
     }
 
-    /* ── Contact card ── */
+    /* ═══════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════ */
+    .contact-section {
+      max-width: 860px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
     .contact-card {
-      background: linear-gradient(135deg, #1e1b4b, #2e1065);
-      border: 1px solid #4f46e5;
-      border-radius: 14px;
-      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f0c29, #1a1060, #24243e);
+      border: 1px solid rgba(99,102,241,0.35);
+      border-radius: 20px;
+      padding: 48px 40px;
       text-align: center;
-      margin-top: 48px;
+    }
+    .contact-card::before {
+      content: "";
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(99,102,241,0.3), transparent 70%);
+      pointer-events: none;
     }
     .contact-card h3 {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 800;
       color: #fff;
-      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
     }
     .contact-card p {
-      font-size: 14px;
+      font-size: 15px;
       color: #a5b4fc;
-      margin-bottom: 16px;
+      margin-bottom: 28px;
     }
-    .contact-card a {
-      display: inline-block;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #fff;
-      text-decoration: none;
       font-size: 14px;
       font-weight: 600;
-      padding: 10px 24px;
-      border-radius: 8px;
-      transition: opacity 0.2s;
+      padding: 12px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.35);
     }
-    .contact-card a:hover { opacity: 0.85; }
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
 
-    /* ── Footer ── */
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
     footer {
-      text-align: center;
-      padding: 24px;
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    footer .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--subtle);
+    }
+    footer .footer-logo {
+      width: 24px; height: 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    footer .footer-logo svg { width: 13px; height: 13px; }
+    footer .footer-right {
       font-size: 12px;
-      color: #475569;
-      border-top: 1px solid #1e293b;
+      color: var(--muted);
+    }
+    footer .footer-right a { color: var(--muted); }
+    footer .footer-right a:hover { color: var(--text); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 700px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+      .toc {
+        position: static;
+        display: none; /* hide on mobile to keep it clean */
+      }
+      .contact-card { padding: 32px 20px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Hero -->
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    </div>
+    Image Flow
+  </div>
+  <div class="nav-pill">Privacy Policy</div>
+</nav>
+
+<!-- HERO -->
 <div class="hero">
-  <div class="badge">Legal</div>
+  <div class="hero-eyebrow">
+    <span>🔒</span> Legal Document
+  </div>
   <h1>Privacy Policy</h1>
-  <p>Image Flow Chrome Extension — how we handle your data, clearly explained.</p>
-  <div class="meta">Effective date: June 14, 2026 &nbsp;·&nbsp; Version 1.0.43</div>
+  <p class="hero-sub">
+    A clear, honest explanation of what data Image Flow accesses,
+    how it is used, and the controls you have.
+  </p>
+  <div class="hero-meta">
+    <div class="dot"></div>
+    Effective June 14, 2026 &nbsp;·&nbsp; Version 1.0.43 &nbsp;·&nbsp; Chrome Extension
+  </div>
 </div>
 
-<div class="container">
+<!-- QUICK FACT CHIPS -->
+<div class="facts-strip">
+  <div class="fact-chip"><span class="chip-icon">🚫</span> No data sold ever</div>
+  <div class="fact-chip"><span class="chip-icon">💾</span> Stored locally on your device</div>
+  <div class="fact-chip"><span class="chip-icon">👁️</span> No browsing history tracked</div>
+  <div class="fact-chip"><span class="chip-icon">🔑</span> No account required</div>
+  <div class="fact-chip"><span class="chip-icon">🔌</span> All integrations are opt-in</div>
+</div>
 
-  <!-- Quick summary cards -->
-  <div class="summary-grid">
-    <div class="summary-card">
-      <div class="icon">🔒</div>
-      <div>
-        <h3>No data sold</h3>
-        <p>Your data is never sold or shared with advertisers.</p>
-      </div>
-    </div>
-    <div class="summary-card">
-      <div class="icon">💾</div>
-      <div>
-        <h3>Local-first storage</h3>
-        <p>Prompts, images, and settings stay in your browser's local storage.</p>
-      </div>
-    </div>
-    <div class="summary-card">
-      <div class="icon">🚫</div>
-      <div>
-        <h3>No browsing tracking</h3>
-        <p>We do not track your browsing history or visited URLs.</p>
-      </div>
-    </div>
-    <div class="summary-card">
-      <div class="icon">👤</div>
-      <div>
-        <h3>Optional integrations</h3>
-        <p>Google Drive and Telegram are opt-in and user-configured.</p>
-      </div>
-    </div>
-  </div>
+<!-- MAIN CONTENT -->
+<div class="page">
 
-  <!-- 1. Introduction -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">1</div>
+  <!-- SIDEBAR TOC -->
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <a href="#intro"><span class="num">1</span> Introduction</a>
+    <a href="#data"><span class="num">2</span> Data We Access</a>
+    <a href="#permissions"><span class="num">3</span> Permissions</a>
+    <a href="#storage"><span class="num">4</span> Local Storage</a>
+    <a href="#third-party"><span class="num">5</span> Third-Party Services</a>
+    <a href="#controls"><span class="num">6</span> Your Controls</a>
+    <a href="#children"><span class="num">7</span> Children's Privacy</a>
+    <a href="#changes"><span class="num">8</span> Policy Changes</a>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- 1 -->
+    <div class="section" id="intro">
+      <div class="section-label"><span class="snum">1</span> Overview</div>
       <h2>Introduction</h2>
-    </div>
-    <p>
-      Image Flow ("we", "our", or "the extension") is a Chrome extension that helps users manage AI
-      workflow prompts, generate images, and automate tasks on Google Labs Flow. This Privacy Policy
-      explains what data the extension accesses, how it is used, and what controls you have.
-    </p>
-    <p>
-      By installing Image Flow you agree to the practices described in this policy. If you do not
-      agree, please uninstall the extension.
-    </p>
-  </div>
+      <p>
+        Image Flow is a Chrome browser extension that helps users manage AI workflow prompts,
+        automate image generation, and streamline tasks on Google Labs Flow. This Privacy Policy
+        describes exactly what information the extension accesses, why, and how it is handled.
+      </p>
+      <p>
+        By installing Image Flow you agree to the practices described here. If you do not agree,
+        please uninstall the extension from Chrome.
+      </p>
 
-  <!-- 2. Data we collect -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">2</div>
+      <!-- data flow visual -->
+      <div class="flow-grid">
+        <div class="flow-card">
+          <div class="fc-icon">📱</div>
+          <div class="fc-title">Collected</div>
+          <div class="fc-desc">Only data needed to run features you trigger yourself</div>
+          <span class="badge-yes">Minimal</span>
+        </div>
+        <div class="flow-card">
+          <div class="fc-icon">🏠</div>
+          <div class="fc-title">Stored</div>
+          <div class="fc-desc">Locally in your browser — never on our servers</div>
+          <span class="badge-yes">Local only</span>
+        </div>
+        <div class="flow-card">
+          <div class="fc-icon">💸</div>
+          <div class="fc-title">Sold</div>
+          <div class="fc-desc">We never sell, rent or trade your data to anyone</div>
+          <span class="badge-no">Never</span>
+        </div>
+        <div class="flow-card">
+          <div class="fc-icon">📊</div>
+          <div class="fc-title">Analytics / Ads</div>
+          <div class="fc-desc">No third-party tracking, analytics or ad services</div>
+          <span class="badge-no">None</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="section" id="data">
+      <div class="section-label"><span class="snum">2</span> Data</div>
       <h2>Data We Access &amp; Why</h2>
-    </div>
-    <p>
-      The extension accesses the following categories of data solely to provide its features:
-    </p>
-    <ul>
-      <li><strong>Active tab URL</strong> — to detect when you are on a Google Labs project page and sync the active project ID.</li>
-      <li><strong>Screenshots of the visible tab</strong> — only when you explicitly trigger the crop tool (Alt+C or the crop button). The cropped image is saved to your local storage or reference image list; it is never sent to our servers.</li>
-      <li><strong>Images right-clicked via the context menu</strong> — to save them to your local gallery or reference list on demand.</li>
-      <li><strong>Prompt text you save to the library</strong> — stored locally in <code>chrome.storage.local</code> and never transmitted without your action.</li>
-      <li><strong>Extension settings</strong> — stored locally (floating widget toggle, slash-command toggle, Telegram credentials you enter, etc.).</li>
-    </ul>
+      <p>
+        The extension only accesses information that is directly required by a feature you
+        explicitly activate. Nothing is collected passively in the background.
+      </p>
 
-    <div class="highlight">
-      <p>⚠️ We do <strong>not</strong> collect names, email addresses, IP addresses, browsing history,
-      keystrokes, form data, or any personally identifiable information beyond what you explicitly
-      provide in the extension's settings fields.</p>
-    </div>
-  </div>
+      <ul class="item-list">
+        <li>
+          <span class="bullet">🌐</span>
+          <span><strong>Active tab URL</strong> — detected to identify when you open a Google Labs project page, so the extension can sync the correct project ID. The URL is never stored on remote servers.</span>
+        </li>
+        <li>
+          <span class="bullet">📸</span>
+          <span><strong>Tab screenshots (crop tool)</strong> — a screenshot of the visible tab is captured <em>only</em> when you explicitly trigger the crop tool (Alt+C or the in-panel button). The cropped image is saved locally as a reference image and is never transmitted to our servers.</span>
+        </li>
+        <li>
+          <span class="bullet">🖼️</span>
+          <span><strong>Images via right-click menu</strong> — when you choose "Save to Image Flow" from the context menu, the image URL or base64 data is saved locally to your gallery. This happens only on your explicit action.</span>
+        </li>
+        <li>
+          <span class="bullet">📝</span>
+          <span><strong>Prompt library content</strong> — prompts you create and save are stored entirely in <code>chrome.storage.local</code> on your device. They are never uploaded without your action.</span>
+        </li>
+        <li>
+          <span class="bullet">⚙️</span>
+          <span><strong>Extension settings</strong> — preferences (widget toggle, slash command, Telegram credentials you enter, etc.) are stored locally and used only to configure extension behavior.</span>
+        </li>
+      </ul>
 
-  <!-- 3. Permissions -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">3</div>
+      <div class="callout">
+        <span class="callout-icon">⚠️</span>
+        <p>We do <strong>not</strong> collect: names, email addresses, IP addresses, browsing history,
+        keystrokes, form inputs, passwords, or any personally identifiable information beyond what
+        you explicitly type into the extension's own settings fields.</p>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="section" id="permissions">
+      <div class="section-label"><span class="snum">3</span> Permissions</div>
       <h2>Chrome Permissions Explained</h2>
+      <p>
+        Every permission requested by Image Flow has a specific, limited purpose. Here is a plain-
+        English explanation of each one:
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Permission</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="code-tag">activeTab</span></td>
+              <td>Read the URL of the currently active tab to detect Google Labs projects.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">tabs</span></td>
+              <td>Monitor tab navigation to track the active project and focus the correct tab when needed.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">scripting</span></td>
+              <td>Inject the crop-selection overlay and automation scripts into Google Labs pages.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">storage</span></td>
+              <td>Save prompts, reference images, project data, and settings locally in your browser.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">downloads</span></td>
+              <td>Save generated images to your Downloads folder with custom filenames you define.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">notifications</span></td>
+              <td>Show desktop notifications for task completions and available extension updates.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">sidePanel</span></td>
+              <td>Render the extension UI in Chrome's native side panel.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">identity</span></td>
+              <td>Handle OAuth2 flow for optional Google Drive backup — only when you choose to enable it.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">contextMenus</span></td>
+              <td>Add "Save to Image Flow" options to the browser right-click menu on images.</td>
+            </tr>
+            <tr>
+              <td><span class="code-tag">alarms</span></td>
+              <td>Schedule a version-check request every 6 hours to notify you of updates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <table class="perm-table">
-      <thead>
-        <tr>
-          <th>Permission</th>
-          <th>Why it is needed</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="perm-name">activeTab</td>
-          <td>Read the URL of the current tab to detect Google Labs projects.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">tabs</td>
-          <td>Monitor tab navigation to keep track of the active project and auto-focus the correct tab.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">scripting</td>
-          <td>Inject the crop overlay and automation scripts into Google Labs pages.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">storage</td>
-          <td>Save prompts, images, settings, and project data locally in your browser.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">downloads</td>
-          <td>Save generated images to your Downloads folder with custom filenames.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">notifications</td>
-          <td>Show desktop notifications for task completion and available updates.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">sidePanel</td>
-          <td>Display the extension UI in Chrome's side panel.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">identity</td>
-          <td>OAuth2 authentication for optional Google Drive integration (only when you enable it).</td>
-        </tr>
-        <tr>
-          <td class="perm-name">contextMenus</td>
-          <td>Add right-click options to save images directly to your gallery or reference list.</td>
-        </tr>
-        <tr>
-          <td class="perm-name">alarms</td>
-          <td>Schedule a periodic version check (every 6 hours) to notify you of updates.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 
-  <!-- 4. Third-party services -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">4</div>
-      <h2>Third-Party Services</h2>
-    </div>
-    <p>The extension may communicate with the following external endpoints:</p>
-    <ul>
-      <li>
-        <strong>nguyenanhdung.io.vn/api/version</strong> — fetches the latest version number to check
-        for updates. No personal data is sent; only a timestamped GET request is made.
-      </li>
-      <li>
-        <strong>Google OAuth2 / Google Drive</strong> — used only if you choose to enable Google Drive
-        backup. Authentication is handled entirely by Google's own OAuth2 flow. The extension only
-        requests the <code>drive.file</code> scope (access to files it creates).
-      </li>
-      <li>
-        <strong>Telegram Bot API</strong> — used only if you enter your own Telegram bot token and
-        chat ID in settings. Notifications are sent to your personal bot; credentials are stored
-        locally and never transmitted to our servers.
-      </li>
-      <li>
-        <strong>api.civitai.com / civitai.com</strong> — accessed only when you use the CivitAI
-        model-search feature inside the extension UI.
-      </li>
-      <li>
-        <strong>translate.googleapis.com</strong> — used for optional prompt translation; no data is
-        stored by us.
-      </li>
-    </ul>
-
-    <div class="highlight">
-      <p>All third-party connections are triggered by your direct actions inside the extension.
-      The extension does not make background requests to any analytics, advertising, or tracking
-      services.</p>
-    </div>
-  </div>
-
-  <!-- 5. Local storage -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">5</div>
+    <!-- 4 -->
+    <div class="section" id="storage">
+      <div class="section-label"><span class="snum">4</span> Storage</div>
       <h2>Local Data Storage</h2>
+      <p>
+        All user-generated data — including your prompt library, reference images (stored as
+        base64), project configurations, and usage counters — is saved exclusively in
+        <code>chrome.storage.local</code> on your own device.
+      </p>
+      <ul class="item-list">
+        <li>
+          <span class="bullet">🔒</span>
+          <span><strong>Never leaves your device</strong> unless you explicitly activate the Google Drive backup feature.</span>
+        </li>
+        <li>
+          <span class="bullet">🗑️</span>
+          <span><strong>Automatically cleared</strong> when you uninstall the extension from Chrome.</span>
+        </li>
+        <li>
+          <span class="bullet">🛠️</span>
+          <span><strong>Manually deletable</strong> at any time via Chrome DevTools → Application → Storage → Extension storage.</span>
+        </li>
+      </ul>
     </div>
-    <p>
-      All user data — including prompt libraries, reference images (stored as base64), project
-      settings, and analytics counters — is saved exclusively in <code>chrome.storage.local</code>
-      on your device. This data:
-    </p>
-    <ul>
-      <li>Never leaves your device unless you explicitly use the Google Drive backup feature.</li>
-      <li>Is cleared automatically when you uninstall the extension.</li>
-      <li>Can be manually deleted at any time from Chrome's extension storage settings.</li>
-    </ul>
-  </div>
 
-  <!-- 6. User controls -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">6</div>
+    <!-- 5 -->
+    <div class="section" id="third-party">
+      <div class="section-label"><span class="snum">5</span> Third-Party</div>
+      <h2>Third-Party Services</h2>
+      <p>
+        The extension may communicate with the following external endpoints. All connections are
+        triggered by your direct actions — there are no background analytics calls.
+      </p>
+
+      <ul class="item-list">
+        <li>
+          <span class="bullet">🔔</span>
+          <span>
+            <strong>nguyenanhdung.io.vn/api/version</strong> — a lightweight GET request (no personal data) is sent every 6 hours to check whether a newer version of the extension is available.
+          </span>
+        </li>
+        <li>
+          <span class="bullet">☁️</span>
+          <span>
+            <strong>Google OAuth2 &amp; Google Drive</strong> — used <em>only</em> if you enable the Drive backup feature. Authentication is handled entirely by Google's own OAuth2 flow. The extension requests only the <span class="code-tag">drive.file</span> scope (files it creates), not full Drive access.
+          </span>
+        </li>
+        <li>
+          <span class="bullet">✈️</span>
+          <span>
+            <strong>Telegram Bot API</strong> — used <em>only</em> if you enter your personal bot token and chat ID in settings. Messages are sent to your own bot. Credentials are stored locally on your device and never sent to our servers.
+          </span>
+        </li>
+        <li>
+          <span class="bullet">🎨</span>
+          <span>
+            <strong>CivitAI API (api.civitai.com)</strong> — accessed only when you explicitly use the model-search feature inside the extension panel.
+          </span>
+        </li>
+        <li>
+          <span class="bullet">🌐</span>
+          <span>
+            <strong>Google Translate API</strong> — used only when you trigger the optional prompt-translation feature. No data is stored by us.
+          </span>
+        </li>
+      </ul>
+
+      <div class="callout">
+        <span class="callout-icon">✅</span>
+        <p>Image Flow does <strong>not</strong> use any advertising networks, third-party analytics
+        platforms (Google Analytics, Mixpanel, etc.), or crash-reporting services. Zero telemetry.</p>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="section" id="controls">
+      <div class="section-label"><span class="snum">6</span> Your Rights</div>
       <h2>Your Controls &amp; Rights</h2>
+      <p>You are in full control of your data at all times.</p>
+      <ul class="item-list">
+        <li>
+          <span class="bullet">🎛️</span>
+          <span><strong>Disable individual features</strong> — the floating widget, slash-command overlay, and Telegram notifications can each be toggled off independently in the Settings tab.</span>
+        </li>
+        <li>
+          <span class="bullet">🗑️</span>
+          <span><strong>Delete all local data</strong> — uninstall the extension, or clear its storage manually via Chrome DevTools → Application → Extension Storage.</span>
+        </li>
+        <li>
+          <span class="bullet">🔗</span>
+          <span><strong>Revoke Google Drive access</strong> — visit <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a> at any time to revoke the extension's Drive authorization.</span>
+        </li>
+        <li>
+          <span class="bullet">👤</span>
+          <span><strong>No account required</strong> — Image Flow works fully offline and without any sign-in, except for the optional Google Drive feature.</span>
+        </li>
+      </ul>
     </div>
-    <ul>
-      <li><strong>Disable features</strong> — the floating widget, slash-command overlay, and Telegram notifications can each be turned off individually in settings.</li>
-      <li><strong>Delete your data</strong> — uninstall the extension to remove all locally stored data, or use Chrome DevTools to clear <code>chrome.storage.local</code> manually.</li>
-      <li><strong>Revoke Google Drive access</strong> — visit <a href="https://myaccount.google.com/permissions" style="color:#818cf8">myaccount.google.com/permissions</a> to revoke the extension's Drive access at any time.</li>
-      <li><strong>No account required</strong> — the extension works fully offline and without any account sign-in (except for the optional Google Drive feature).</li>
-    </ul>
-  </div>
 
-  <!-- 7. Children -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">7</div>
+    <!-- 7 -->
+    <div class="section" id="children">
+      <div class="section-label"><span class="snum">7</span> Children</div>
       <h2>Children's Privacy</h2>
+      <p>
+        Image Flow is not directed at, and does not knowingly collect information from, children
+        under the age of 13. If you believe a child has used this extension in a way that may have
+        collected personal information, please contact us so we can take appropriate action.
+      </p>
     </div>
-    <p>
-      Image Flow is not directed at children under 13. We do not knowingly collect any information
-      from children. If you believe a child has used this extension, please contact us so we can
-      take appropriate action.
-    </p>
-  </div>
 
-  <!-- 8. Changes -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-number">8</div>
+    <!-- 8 -->
+    <div class="section" id="changes">
+      <div class="section-label"><span class="snum">8</span> Updates</div>
       <h2>Changes to This Policy</h2>
+      <p>
+        We may revise this Privacy Policy when the extension's features or data practices change.
+        The "Effective date" at the top of this page will always reflect the most recent revision.
+        We encourage you to review this page periodically.
+      </p>
+      <p>
+        Continued use of the extension after a policy update constitutes your acceptance of the
+        revised terms.
+      </p>
     </div>
-    <p>
-      We may update this Privacy Policy when the extension's functionality changes. The "Effective
-      date" at the top of the page will always reflect the latest revision. Continued use of the
-      extension after a policy update constitutes acceptance of the new terms.
-    </p>
-  </div>
 
-  <!-- Contact -->
+  </div><!-- /content -->
+</div><!-- /page -->
+
+<!-- CONTACT -->
+<div class="contact-section">
   <div class="contact-card">
     <h3>Questions or concerns?</h3>
-    <p>Reach out and we'll respond as soon as possible.</p>
-    <a href="https://nguyenanhdung.io.vn" target="_blank" rel="noopener">Visit our website →</a>
+    <p>Have a question about this policy or how your data is handled? Reach out — we'll respond promptly.</p>
+    <a class="btn-primary" href="https://nguyenanhdung.io.vn" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Contact Us
+    </a>
   </div>
-
 </div>
 
+<!-- FOOTER -->
 <footer>
-  © 2026 Image Flow &nbsp;·&nbsp; All rights reserved &nbsp;·&nbsp;
-  <a href="https://nguyenanhdung.io.vn" style="color:#6366f1;text-decoration:none">nguyenanhdung.io.vn</a>
+  <div class="footer-brand">
+    <div class="footer-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    </div>
+    Image Flow &nbsp;·&nbsp; v1.0.43
+  </div>
+  <div class="footer-right">
+    © 2026 Image Flow &nbsp;·&nbsp;
+    <a href="https://nguyenanhdung.io.vn" target="_blank" rel="noopener">nguyenanhdung.io.vn</a>
+    &nbsp;·&nbsp; All rights reserved
+  </div>
 </footer>
 
 </body>
